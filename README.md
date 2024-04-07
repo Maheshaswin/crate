@@ -43,7 +43,6 @@
 - Prerequisites
   - Node
   - MySQL (or Postgres / Sqlite / MSSQL)
-- Clone repo `git clone git@github.com:atulmy/crate.git crate`
 - Switch to `code` directory `cd code`
 - Configurations
   - Modify `/api/src/config/database.json` for database credentials
