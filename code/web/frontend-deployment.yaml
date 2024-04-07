@@ -1,3 +1,4 @@
+# crate-frontend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,16 +13,25 @@ spec:
       labels:
         app: crate-frontend
     spec:
-      containers:  # This line was indented incorrectly
-        - name: crate-frontend
-          image: code_crate-frontend:latest
-          imagePullPolicy: Never
-          ports:
-            - containerPort: 3000
-          resources:
-            requests:
-              memory: "300Mi"  # Request 64 megabytes of memory
-              cpu: "250m"      # Request 250 milliCPU (0.25 CPU cores)
-            limits:
-              memory: "500Mi" # Limit memory usage to 128 megabytes
-              cpu: "500m"     # Limit CPU usage to 500 milliCPU (0.5 CPU cores)
+      containers:
+      - name: crate-frontend
+        image: code_crate-frontend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:
+        - name: BACKEND_HOST
+          value: "crate-backend"
+        - name: BACKEND_PORT
+          value: "8000"
+        - name: MYSQL_HOST
+          value: "mysql"
+        - name: MYSQL_PORT
+          value: "3306"
+        resources:
+          requests:
+            memory: "400Mi"
+            cpu: "100m"
+          limits:
+            memory: "500Mi"
+            cpu: "500m"

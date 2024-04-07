@@ -1,7 +1,8 @@
+# mysql-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-deployment
+  name: mysql
 spec:
   replicas: 1
   selector:
@@ -15,19 +16,17 @@ spec:
       containers:
       - name: mysql
         image: mysql:8.0
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 3306
         env:
         - name: MYSQL_ALLOW_EMPTY_PASSWORD
           value: 'true'
         - name: MYSQL_DATABASE
           value: crate
+        ports:
+        - containerPort: 3306
         resources:
           requests:
-            memory: "300Mi"  # Request 64 megabytes of memory
-            cpu: "250m"      # Request 250 milliCPU (0.25 CPU cores)
+            memory: "500Mi"
+            cpu: "250m"
           limits:
-            memory: "500Mi" # Limit memory usage to 500 megabytes
-            cpu: "500m"     # Limit CPU usage to 500 milliCPU (0.5 CPU cores)
-
+            memory: "1Gi"
+            cpu: "500m"

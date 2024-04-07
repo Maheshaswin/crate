@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: crate-frontend
 spec:
-  type: NodePort
-  ports:
-  - port: 3000
-    protocol: TCP
-    targetPort: 3000
-    nodePort: 31000
   selector:
     app: crate-frontend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 31000  # Specify the desired NodePort here
+  type: NodePort  # Change the service type to NodePort

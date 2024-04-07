@@ -1,3 +1,4 @@
+# crate-backend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,16 +13,21 @@ spec:
       labels:
         app: crate-backend
     spec:
-      containers:  # Correct indentation for the containers field
-        - name: crate-backend
-          image: code_crate-backend:latest
-          imagePullPolicy: Never
-          ports:
-            - containerPort: 8000
-          resources:
-            requests:
-              memory: "300Mi"  # Request 64 megabytes of memory
-              cpu: "250m"      # Request 250 milliCPU (0.25 CPU cores)
-            limits:
-              memory: "500Mi" # Limit memory usage to 300 megabytes
-              cpu: "500m"     # Limit CPU usage to 500 milliCPU (0.5 CPU cores)
+      containers:
+      - name: crate-backend
+        image: code_crate-backend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MYSQL_HOST
+          value: "mysql"
+        - name: MYSQL_PORT
+          value: "3306"
+        resources:
+          requests:
+            memory: "400Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
