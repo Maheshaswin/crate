@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crate-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crate-backend
+  template:
+    metadata:
+      labels:
+        app: crate-backend
+    spec:
+      containers:  # Correct indentation for the containers field
+        - name: crate-backend
+          image: code_crate-backend:latest
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "64Mi"  # Request 64 megabytes of memory
+              cpu: "250m"      # Request 250 milliCPU (0.25 CPU cores)
+            limits:
+              memory: "128Mi" # Limit memory usage to 128 megabytes
+              cpu: "500m"     # Limit CPU usage to 500 milliCPU (0.5 CPU cores)

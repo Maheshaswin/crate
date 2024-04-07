@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  crate-frontend:
+    container_name: crate-frontend
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Expose frontend port
+    networks:
+      - crate-network  # Attach to the same network
+    depends_on:
+      - mysql # Ensure backend service starts after MySQL
+
+  crate-backend:
+    container_name: crate-backend
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Expose backend port
+    networks:
+      - crate-network  # Attach to the same network
+    depends_on:
+      - mysql  # Ensure backend service starts after MySQL
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: crate
+      MySQL_DIALECT: mysql
+      MYSQL_HOST: host.docker.internal
+    ports:
+      - "3306:3306"
+    networks:
+      - crate-network
+
+
+networks:
+  crate-network:
+    driver: bridge
