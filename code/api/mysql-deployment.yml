@@ -15,16 +15,19 @@ spec:
       containers:
       - name: mysql
         image: mysql:8.0
+        imagePullPolicy: Never
         ports:
         - containerPort: 3306
         env:
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: 'true'
         - name: MYSQL_DATABASE
           value: crate
         resources:
           requests:
-            memory: "64Mi"  # Request 64 megabytes of memory
+            memory: "300Mi"  # Request 64 megabytes of memory
             cpu: "250m"      # Request 250 milliCPU (0.25 CPU cores)
           limits:
-            memory: "128Mi" # Limit memory usage to 128 megabytes
+            memory: "500Mi" # Limit memory usage to 500 megabytes
             cpu: "500m"     # Limit CPU usage to 500 milliCPU (0.5 CPU cores)
 
